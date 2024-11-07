@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExtraCircular - Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Basic styling for body and container */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Sidebar styling */
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      padding-top: 80px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .sidebar h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #f1f1f1;
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    /* Dropdown styling */
+    .dropdown-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.1em;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      padding: 10px 0;
+      margin-bottom: 5px;
+      outline: none;
+    }
+
+    .dropdown-content {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding-left: 15px;
+    }
+
+    /* Welcome section styling */
+    .welcome-container {
+      margin-left: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .welcome-image {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Main Menu Button */
+    #menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    /* Container styling */
+    .container {
+      margin-left: 20px;
+      padding: 20px;
+    }
+
+    /* Posts */
+    .posts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .post {
+      flex: 1 1 45%;
+      background: #fff;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 45%;
+    }
+
+    .post__image {
+      height: 100px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .post__image--1 {
+      background-image: url('football.jpg');
+    }
+
+    .post__image--2 {
+      background-image: url('cricket.jpg');
+    }
+
+    .post__image--3 {
+      background-image: url('yoga.jpg');
+    }
+
+    .post__image--4 {
+      background-image: url('olympics.jpg');
+    }
+
+    .post__content {
+      padding: 15px;
+    }
+
+    .post__title {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+    }
+
+    .post__excerpt {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .btn--accent {
+      color: #e91e63;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    /* Style for Logout Popup */
+    .popup-message {
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #333;
+      color: #fff;
+      padding: 15px 30px;
+      font-size: 1em;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 2000; /* Above other elements */
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+  <!-- Sidebar with menu -->
+  <div id="sidebar" class="sidebar">
+    <button class="dropdown-btn">ACTIVITIES</button>
+    <div class="dropdown-content">
+      <a href="pcap.html">SPORTS</a>
+    </div>
+    <button class="dropdown-btn">CLUBS</button>
+    <div class="dropdown-content">
+      <a href="sports_clubs.html">SPORTS CLUBS</a>
+    </div>
+    <button class="dropdown-btn">ATTENDANCE</button>
+    <div class="dropdown-content">
+      <a href="my_events.html">My Activities</a>
+    </div>
+    <button class="dropdown-btn">User Profile</button>
+    <div class="dropdown-content">
+      <a href="my_profile.html" id="myProfileButton">My Profile</a>
+    </div>
+  </div>
+
+  <!-- Main Menu Button -->
+  <button id="menu-toggle" onclick="toggleSidebar()">Main Menu</button>
+
+  <!-- Welcome Section -->
+  <div class="welcome-container">
+    <img src="welcome.png" alt="Welcome to Dashboard" class="welcome-image">
+
+    <!-- Logout Button -->
+    <button id="logout-button">Logout</button>
+
+    <!-- Popup Message for Logout Confirmation -->
+    <div id="logout-popup" class="popup-message">You have successfully logged out</div>
+  </div>
+
+  <!-- News Section -->
+  <div class="container">
+    <h2>Top ExtraCircular Activities News</h2>
+    <div class="posts">
+      <!-- Post 1 -->
+      <div class="post">
+        <div class="post__image post__image--1"></div>
+        <div class="post__content">
+          <h3 class="post__title">Football Championship Highlights</h3>
+          <p class="post__excerpt">Discover the latest updates from the international football championships with highlights of the best matches and standout players.</p>
+          <a href="https://www.indiatimes.com/sports" target="_blank" class="btn--accent post__button">Read more</a>
+        </div>
+      </div>
+
+      <!-- Post 2 -->
+      <div class="post">
+        <div class="post__image post__image--2"></div>
+        <div class="post__content">
+          <h3 class="post__title">Cricket World Cup Insights</h3>
+          <p class="post__excerpt">Get the latest news and analysis on the Cricket World Cup, with insights on team performances and player statistics.</p>
+          <a href="https://timesofindia.indiatimes.com/sports/cricket" target="_blank" class="btn--accent post__button">Read more</a>
+        </div>
+      </div>
+
+      <!-- Post 3 -->
+      <div class="post">
+        <div class="post__image post__image--3"></div>
+        <div class="post__content">
+          <h3 class="post__title">Yoga League Updates</h3>
+          <p class="post__excerpt">Stay informed on the latest results and highlights from Yoga leagues worldwide.</p>
+          <a href="https://www.indiatvnews.com/video/yoga" target="_blank" class="btn--accent post__button">Read more</a>
+        </div>
+      </div>
+
+      <!-- Post 4 -->
+      <div class="post">
+        <div class="post__image post__image--4"></div>
+        <div class="post__content">
+          <h3 class="post__title">Olympics News and Events</h3>
+          <p class="post__excerpt">Catch up on Olympic events and updates, featuring stories of athletes, event highlights, and the latest results.</p>
+          <a href="https://olympics.com/en/news" target="_blank" class="btn--accent post__button">Read more</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sidebar toggle function
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+
+    // Dropdown toggle
+    const dropdowns = document.querySelectorAll(".dropdown-btn");
+    dropdowns.forEach(btn => {
+      btn.addEventListener("click", function() {
+        this.classList.toggle("active");
+        const dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+          dropdownContent.style.display = "none";
+        } else {
+          dropdownContent.style.display = "block";
+        }
+      });
+    });
+
+    // Logout popup
+    document.getElementById('logout-button').addEventListener('click', function() {
+      const popup = document.getElementById('logout-popup');
+      popup.style.display = 'block';
+      
+      setTimeout(() => {
+        popup.style.display = 'none';
+        window.location.href = 'login.html';
+      }, 2000); // Redirect after 3 seconds
+    });
+  </script>
+</body>
+</html>

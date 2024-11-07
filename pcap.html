@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPORTS STATS PAGE</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body class="dashboard-body">
+  <div class="content">
+    <button class="back-button" onclick="goBack()">← Back to Dashboard</button>
+    <h2>SPORTS STATISTICS</h2>
+    
+    <div class="main-container">
+      <div class="sports-info">
+        <h3>Sport Information</h3>
+        
+        <!-- Sports status bars -->
+        <div class="status-bar" onclick="showPopup('Soccer', 'Coach: John Doe, Sessions: Mon, Wed, Fri')">
+          <span class="icon">⚽</span>
+          <p>Soccer - 70% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Basketball', 'Coach: Jane Smith, Sessions: Tue, Thu')">
+          <span class="icon">🏀</span>
+          <p>Basketball - 80% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('American Football', 'Coach: Mark Lee, Sessions: Sat')">
+          <span class="icon">🏈</span>
+          <p>American Football - 65% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Baseball', 'Coach: Sarah Green, Sessions: Sun')">
+          <span class="icon">⚾</span>
+          <p>Baseball - 75% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Tennis', 'Coach: Emily White, Sessions: Mon, Fri')">
+          <span class="icon">🎾</span>
+          <p>Tennis - 90% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Ice Hockey', 'Coach: Robert Black, Sessions: Thu')">
+          <span class="icon">🏒</span>
+          <p>Ice Hockey - 50% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Cricket', 'Coach: Lisa Blue, Sessions: Tue, Wed')">
+          <span class="icon">🏏</span>
+          <p>Cricket - 85% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Volleyball', 'Coach: Tom Red, Sessions: Mon, Wed')">
+          <span class="icon">🏐</span>
+          <p>Volleyball - 60% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Table Tennis', 'Coach: Steve Yellow, Sessions: Fri')">
+          <span class="icon">🏓</span>
+          <p>Table Tennis - 70% Complete</p>
+        </div>
+        <div class="status-bar" onclick="showPopup('Boxing', 'Coach: Kelly Pink, Sessions: Sat')">
+          <span class="icon">🥊</span>
+          <p>Boxing - 95% Complete</p>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="sportsChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Popup for sport details -->
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+      <h3 id="sport-name"></h3>
+      <p id="sport-info"></p>
+      <button class="close-button" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "dashboard.html";
+    }
+
+    function showPopup(sportName, sportInfo) {
+      document.getElementById('sport-name').innerText = sportName;
+      document.getElementById('sport-info').innerText = sportInfo;
+      document.getElementById('overlay').style.display = 'flex'; // Changed from 'block' to 'flex'
+      document.getElementById('popup').style.display = 'block';
+    }
+    
+    function closePopup() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popup').style.display = 'none';
+    }
+    
+
+    const ctx = document.getElementById('sportsChart').getContext('2d');
+    const sportsChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Soccer', 'Basketball', 'American Football', 'Baseball', 'Tennis', 'Ice Hockey', 'Cricket', 'Volleyball', 'Table Tennis', 'Boxing'],
+        datasets: [{
+          label: 'Sports Statistics',
+          data: [70, 80, 65, 75, 90, 50, 85, 60, 70, 95],
+          backgroundColor: [
+            '#f1c40f', '#27ae60', '#f39c12', '#2ecc71', '#16a085',
+            '#e67e22', '#1abc9c', '#f39c12', '#f1c40f', '#27ae60'
+          ],
+          borderColor: '#fff',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(tooltipItem) {
+                return tooltipItem.label + ': ' + tooltipItem.raw + '% Complete';
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        /* Styling the profile card container */
+        .profile-card {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Styling the profile image */
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* Styling the profile name */
+        .profile-card h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card" id="profileContainer">
+        <img id="profileImage" src="default-profile.png" alt="Profile Picture">
+        <h2><span id="fullName">John Doe</span></h2>
+        <p><strong>Email:</strong> <span id="email">johndoe@example.com</span></p>
+        <p><strong>Age:</strong> <span id="age">N/A</span></p>
+        <p><strong>Bio:</strong> <span id="bio">No bio available</span></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve user profile from localStorage
+            const storedUser = JSON.parse(localStorage.getItem("userProfile"));
+
+            // Check if the user profile exists and update profile details
+            if (storedUser) {
+                document.getElementById("profileImage").src = storedUser.picture || "default-profile.png";
+                document.getElementById("fullName").textContent = `${storedUser.firstName} ${storedUser.lastName}`;
+                document.getElementById("email").textContent = storedUser.email || "N/A";
+                document.getElementById("age").textContent = storedUser.age || "N/A";
+                document.getElementById("bio").textContent = storedUser.bio || "No bio available";
+            }
+        });
+    </script>
+
+</body>
+</html>

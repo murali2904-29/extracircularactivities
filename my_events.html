@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Events Attendance</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body class="dashboard-body">
+  
+  <!-- Back to Dashboard Button -->
+  <div class="back-button-container">
+    <a href="dashboard.html" class="back-button">← Back to Dashboard</a>
+  </div>
+
+  <div class="content">
+    <h2>My Events Attendance</h2>
+
+    <!-- Attendance Chart -->
+    <canvas id="attendanceChart" width="400" height="200"></canvas>
+
+    <!-- Events Container with Event Logos -->
+    <div class="events-container">
+      <a href="#" class="event-logo" onclick="showEventDetails('Athletics')">
+        <img src='athletics.png' alt="Athletics Logo">
+        <p>Athletics</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('CTSOs')">
+        <img src='ctso-logo.png' alt="CTSOs Logo">
+        <p>CTSOs</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('Student Government')">
+        <img src="student-gov-logo.png" alt="Student Government Logo">
+        <p>Student Government</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('Model UN')">
+        <img src="model-un-logo.png" alt="Model UN Logo">
+        <p>Model UN</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('Volunteer Organizations')">
+        <img src="volunteer-logo.png" alt="Volunteer Logo">
+        <p>Volunteer Organizations</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('Language Clubs')">
+        <img src="language-clubs-logo.png" alt="Language Clubs Logo">
+        <p>Language Clubs</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('Cultural Organizations')">
+        <img src="cultural-org-logo.png" alt="Cultural Organizations Logo">
+        <p>Cultural Organizations</p>
+      </a>
+      <a href="#" class="event-logo" onclick="showEventDetails('The Arts')">
+        <img src="arts-logo.png" alt="The Arts Logo">
+        <p>The Arts</p>
+      </a>
+    </div>
+
+    <!-- Event Details Section -->
+    <div id="eventDetails" class="event-details" style="display:none;">
+      <h3 id="eventTitle">Event Title</h3>
+      <img id="eventImage" src="" alt="Event Image">
+      <p><strong>Organizer:</strong> <span id="eventOrganizer"></span></p>
+      <p><strong>Venue:</strong> <span id="eventVenue"></span></p>
+      <p><strong>Attendance Percentage:</strong> <span id="attendancePercentage"></span></p>
+    </div>
+  </div>
+
+  <script>
+    // Sample data for the events
+    const eventData = {
+      'Athletics': { percentage: 85, organizer: 'Sports Dept', venue: 'Main Stadium', image: 'athletics.png' },
+      'CTSOs': { percentage: 75, organizer: 'Career Services', venue: 'Conference Hall', image: 'ctso-logo.png' },
+      'Student Government': { percentage: 90, organizer: 'Student Council', venue: 'Auditorium', image: 'student-gov-logo.png' },
+      'Model UN': { percentage: 80, organizer: 'Debate Society', venue: 'Room 205', image: 'model-un-logo.png' },
+      'Volunteer Organizations': { percentage: 88, organizer: 'Community Outreach', venue: 'Community Center', image: 'volunteer-logo.png' },
+      'Language Clubs': { percentage: 65, organizer: 'Language Dept', venue: 'Language Lab', image: 'language-clubs-logo.png' },
+      'Cultural Organizations': { percentage: 70, organizer: 'Cultural Society', venue: 'Cultural Hall', image: 'cultural-org-logo.png' },
+      'The Arts': { percentage: 92, organizer: 'Arts Dept', venue: 'Arts Theater', image: 'arts-logo.png' },
+    };
+
+    // Render the attendance chart
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(eventData),
+        datasets: [{
+          label: 'Attendance Percentage',
+          data: Object.values(eventData).map(event => event.percentage),
+          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        }
+      }
+    });
+
+    // Show event details when an event logo is clicked
+    function showEventDetails(eventName) {
+      const event = eventData[eventName];
+      document.getElementById('eventTitle').textContent = eventName;
+      document.getElementById('eventImage').src = event.image;
+      document.getElementById('eventOrganizer').textContent = event.organizer;
+      document.getElementById('eventVenue').textContent = event.venue;
+      document.getElementById('attendancePercentage').textContent = event.percentage + '%';
+      document.getElementById('eventDetails').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
